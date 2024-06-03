@@ -17,7 +17,7 @@ export default function AddProduct() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { control, handleSubmit, watch } = useForm<FormInputs>({
+  const { control, handleSubmit } = useForm<FormInputs>({
     defaultValues: {
       products: [
         {
