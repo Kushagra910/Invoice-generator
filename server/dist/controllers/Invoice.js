@@ -71,7 +71,8 @@ exports.createInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
         console.log("Generated HTML: ", html);
         // Launch Puppeteer
         console.log("Launching Puppeteer...");
-        const browser = yield puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"], ignoreDefaultArgs: ['--disable-extensions'] });
+        const chromiumExecutablePath = puppeteer.executablePath();
+        const browser = yield puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"], executablePath: chromiumExecutablePath });
         const page = yield browser.newPage();
         console.log("Setting page content...");
         yield page.setContent(html, { waitUntil: 'networkidle0' });
