@@ -75,7 +75,8 @@ exports.createInvoice = async (req: CustomRequest, res: Response) => {
 
     // Launch Puppeteer
     console.log("Launching Puppeteer...");
-    const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+
+    const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"],ignoreDefaultArgs: ['--disable-extensions']});
     const page = await browser.newPage();
 
     console.log("Setting page content...");
