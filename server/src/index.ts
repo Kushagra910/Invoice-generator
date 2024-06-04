@@ -6,21 +6,28 @@ import database from './configs/db';
 const authRoutes  = require('./routes/auth');
 const invoiceRoutes =  require("./routes/Invoice");
 const app = express();
+const auth = require('./middlewares/auth');
 
 dotenv.config();
 
 const port = process.env.PORT;
-app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
 
-
+app.use(
+  cors({
+      origin: "*",
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+  })
+);
 database();
 
 
 app.use('/api/v1/user',authRoutes);
 app.use('/api/v1/invoice' , invoiceRoutes);
+
 
 app.get("/",(req,res)=>{
   return res.json({
@@ -28,6 +35,8 @@ app.get("/",(req,res)=>{
     message:`Your server is running `
   })
 });
+
+
 
 
 app.listen(port, () => {

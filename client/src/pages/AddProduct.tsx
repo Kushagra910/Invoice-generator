@@ -22,7 +22,7 @@ export default function AddProduct() {
       products: [
         {
           name: "",
-          quantity: 1,
+          quantity: 0,
           rate: 0,
         },
       ],
@@ -33,7 +33,6 @@ export default function AddProduct() {
     control,
     name: "products",
   });
-
 
   const onSubmit = (data: FormInputs) => {
     const productsWithTotals = data.products.map(product => ({
@@ -58,17 +57,18 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 md:px-6 md:py-12">
-      <h1 className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">Product Information</h1>
+      <div className="bg-richblack-900  h-screen w-full">
+          <div className="mx-auto max-w-3xl px-4 py-8 md:px-6 md:py-12 bg-richblack-900 ">
+      <h1 className="mb-8 text-3xl font-bold tracking-tight text-richblack-100 md:text-4xl">Product Information</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
         {fields.map((field, index) => (
-          <div key={field.id} className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-950">
+          <div key={field.id} className="rounded-lg bg-richblack-700 p-6 shadow-lg">
             <div className="grid gap-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label
                     htmlFor={`products[${index}].name`}
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-1 block text-sm font-medium text-richblack-5"
                   >
                     Product Name
                   </label>
@@ -79,7 +79,7 @@ export default function AddProduct() {
                       <input
                         {...field}
                         type="text"
-                        className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-50"
+                        className="block w-full rounded-md border border-richblack-300 bg-richblack-500 p-2 text-sm text-richblack-5 focus:border-richblack-300 focus:ring-richblack-300"
                       />
                     )}
                   />
@@ -87,7 +87,7 @@ export default function AddProduct() {
                 <div>
                   <label
                     htmlFor={`products[${index}].quantity`}
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-1 block text-sm font-medium text-richblack-5"
                   >
                     Quantity
                   </label>
@@ -98,7 +98,7 @@ export default function AddProduct() {
                       <input
                         {...field}
                         type="number"
-                        className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-50"
+                        className="block w-full rounded-md border border-richblack-300 bg-richblack-500 p-2 text-sm text-richblack-5 focus:border-richblack-300 focus:ring-richblack-300"
                       />
                     )}
                   />
@@ -108,7 +108,7 @@ export default function AddProduct() {
                 <div>
                   <label
                     htmlFor={`products[${index}].rate`}
-                    className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    className="mb-1 block text-sm font-medium text-richblack-5"
                   >
                     Rate
                   </label>
@@ -119,13 +119,17 @@ export default function AddProduct() {
                       <input
                         {...field}
                         type="number"
-                        className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-50"
+                        className="block w-full rounded-md border border-richblack-300 bg-richblack-500 p-2 text-sm text-richblack-5 focus:border-richblack-300 focus:ring-richblack-300"
                       />
                     )}
                   />
                 </div>
                 <div className="flex items-end justify-end">
-                  <button type="button" onClick={() => remove(index)}>
+                  <button
+                    type="button"
+                    className="text-sm text-richblack-5 hover:text-richblack-500"
+                    onClick={() => remove(index)}
+                  >
                     Remove
                   </button>
                 </div>
@@ -136,6 +140,7 @@ export default function AddProduct() {
         <div className="flex justify-end">
           <button
             type="button"
+            className="text-sm font-medium text-richblack-300 hover:text-richblack-500 border rounded-lg px-6 py-2"
             onClick={() =>
               append({ name: "", quantity: 1, rate: 0 })
             }
@@ -144,9 +149,10 @@ export default function AddProduct() {
           </button>
         </div>
         <div className="flex justify-end">
-          <button type="submit">Next</button>
+          <button type="submit" className="text-sm font-medium text-richblack-300 border rounded-lg px-6 py-2 hover:text-richblack-500">Next</button>
         </div>
       </form>
     </div>
+      </div>
   );
 }

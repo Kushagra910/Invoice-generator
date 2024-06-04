@@ -9,9 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Invoice = require('../models/Invoice');
-const puppeteer = require("puppeteer");
+const Invoice = require('../models/invoice');
+const puppeteer = require('puppeteer');
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
+const Handlebars = require('handlebars');
+// Delay function to wait for a specified amount of time
+const delay = (time) => {
+    return new Promise(resolve => setTimeout(resolve, time));
+};
 exports.createInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { invoice, userId } = req.body;
     console.log("PRODUCTS INSIDE CREATEINVOICE BACKEND", invoice);
@@ -29,7 +36,7 @@ exports.createInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
             products: invoice.products.map((product) => ({
                 productName: product.name,
                 productQty: product.quantity,
-                productRate: product.rate
+                productRate: product.rate,
             })),
             total_amount: totalAmount,
             after_gst_amount: afterGstAmount,
@@ -40,26 +47,60 @@ exports.createInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
         // Add the invoice to the user's invoices
         const user = yield User.findById(userId);
         if (user) {
-            user.invoices.push(savedInvoice.userId);
+            user.invoices.push(savedInvoice._id);
             yield user.save();
         }
-        // Generate PDF using Puppeteer
-        const browser = yield puppeteer.launch();
+        // Load HTML template
+        const templatePath = path.join(__dirname, 'template.html');
+        const templateHtml = fs.readFileSync(templatePath, 'utf8');
+        const template = Handlebars.compile(templateHtml);
+        const html = template({
+            userName: 'kush',
+            userEmail: 'kush@gmail.com',
+            products: invoice.products.map((product) => ({
+                name: product.name,
+                quantity: product.quantity,
+                rate: product.rate,
+                total: product.quantity * product.rate
+            })),
+            totalRate: totalAmount,
+            totalGST: (totalAmount * 0.18).toFixed(2),
+            grandTotal: afterGstAmount
+        });
+        // Log the generated HTML for debugging
+        console.log("Generated HTML: ", html);
+        // Launch Puppeteer
+        console.log("Launching Puppeteer...");
+        const browser = yield puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
         const page = yield browser.newPage();
-        const invoiceHTML = `
-        HI
-  `;
-        yield page.setContent(invoiceHTML);
-        const pdfBuffer = yield page.pdf({ format: 'A4' });
+        console.log("Setting page content...");
+        yield page.setContent(html, { waitUntil: 'networkidle0' });
+        // Emulate media type for print
+        yield page.emulateMediaType('print');
+        // Give some time to ensure all resources are loaded
+        yield delay(2000);
+        console.log("Page content set successfully.");
+        // Take a screenshot for debugging
+        yield page.screenshot({ path: 'debug_screenshot.png', fullPage: true });
+        // Generate PDF
+        const pdfBuffer = yield page.pdf({
+            format: 'A4',
+            margin: { top: '10px', right: '10px', bottom: '10px', left: '10px' },
+            printBackground: true,
+            landscape: true,
+        });
         yield browser.close();
-        // Set response headers and send PDF buffer
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
+        console.log("PDF Buffer Length:", pdfBuffer.length);
+        // Send PDF as response
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Length': pdfBuffer.length
+        });
         res.send(pdfBuffer);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Server error' });
+        return res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 // exports.getInvoice = async (req: CustomRequest, res: Response) => {

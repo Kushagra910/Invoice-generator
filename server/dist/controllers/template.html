@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: start;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 30px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .section {
+            margin-top: 70px;
+        }
+        .section p {
+            text-align: right;
+            margin-top: 10px;
+            margin-right: 70px;
+            font-size: 18px;
+        }
+        .grand-total {
+            padding-top: 20px;
+            font-weight: bold;
+            text-align: right; 
+            padding-right: 30px; 
+        }
+        .total-rate {
+            font-weight: bold;
+        }
+        .valid-until {
+            margin-top: 100px;
+            margin-left: 30px;
+            font-weight: bold;
+        }
+        .table-head{
+            font-weight: 700;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Invoice Generator</h1>
+        <table>
+            <thead>
+                <tr class="table-head">
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd;">{{name}}</td>
+                    <td style="border-bottom: 1px solid #ddd; color: rgb(45, 90, 118); font-weight: bold;">{{quantity}}</td>
+                    <td style="border-bottom: 1px solid #ddd;">{{rate}}</td>
+                    <td style="border-bottom: 1px solid #ddd;">${{total}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <div class="section">
+            <p class="total-rate" style="margin-top: 50px;">Total Rate: <span style="font-weight: 200;">INR {{totalRate}}</span></p>
+            <p class="total-rate">Total GST: <span style="font-weight: 200;">INR {{totalGST}}</span></p>
+            <hr style="border: none; border-top: 2px solid black; width:350px; margin-right: 0;">
+            <p class="grand-total">Grand Total: <span style="color: rgb(45, 90, 118)">INR {{grandTotal}}</span></p>
+            <hr  style="border: none; border-top: 2px solid black; width: 350px; margin-right: 0;"/>
+        </div>
+        <div class="valid-until">
+            Valid Until - <span id="tomorrowDate">{{tomorrowDate}}</span>
+        </div>
+    </div>
+    <script>
+        // Get tomorrow's date
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        // Format the date as DD/MM/YYYY
+        const formattedDate = `${tomorrow.getDate()}/${tomorrow.getMonth() + 1}/${tomorrow.getFullYear()}`;
+
+        // Set the formatted date to the span element
+        document.getElementById('tomorrowDate').innerText = formattedDate;
+    </script>
+</body>
+</html>

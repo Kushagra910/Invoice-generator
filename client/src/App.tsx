@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { Navbar } from './components/Navbar'
 import InvoiceSummary from './pages/SummaryPage'
 
+
 function App() {
 
 

@@ -7,5 +7,5 @@ const rootReducer = combineReducers({
   auth : authSlice,
   invoice : invoiceSlic
 })
-
+export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
