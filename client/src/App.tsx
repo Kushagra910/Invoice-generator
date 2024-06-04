@@ -16,6 +16,7 @@ function App() {
     <>
       <div className='w-full bg-richblack-700 p-2 text-white'><Navbar/></div>
       <Routes>
+          <Route path = '/' element={<div className='h-screen bg-richblack-500 text-white text-3xl flex justify-center items-center'>HOME PAGE</div>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<Signup/>}/>
           <Route path = '/addProduct' element={<ProtectedRoute><AddProduct/></ProtectedRoute>}/>
