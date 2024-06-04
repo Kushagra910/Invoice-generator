@@ -11,7 +11,6 @@ const db_1 = __importDefault(require("./configs/db"));
 const authRoutes = require('./routes/auth');
 const invoiceRoutes = require("./routes/Invoice");
 const app = (0, express_1.default)();
-const auth = require('./middlewares/auth');
 dotenv_1.default.config();
 const port = process.env.PORT;
 app.use(express_1.default.json());
