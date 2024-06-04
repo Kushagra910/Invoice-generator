@@ -3,7 +3,6 @@ import { toast } from 'react-hot-toast';
 import { setLoading } from '../../slices/authSlice';
 import { invoiceEndpoints } from '../apis';
 import { Dispatch } from 'redux';
-import { NavigateFunction } from 'react-router-dom';
 import { AxiosRequestHeaders } from 'axios';
 
 const { CREATE_INVOICES } = invoiceEndpoints;
@@ -14,7 +13,7 @@ interface Invoice {
   after_gst_amount: number;
 }
 
-export function createAndDownloadPDF(invoice: Invoice, token: string, navigate: NavigateFunction, user: any) {
+export function createAndDownloadPDF(invoice: Invoice, token: string, user: any) {
   return async (dispatch: Dispatch) => {
     const toastId = toast.loading('Generating invoice...');
     dispatch(setLoading(true));

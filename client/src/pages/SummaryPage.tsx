@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { createAndDownloadPDF } from '../services/operations/invoiceApi';
 
 const InvoiceSummary = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   
   // Assuming that the invoices are stored in the state under 'invoice' key
   const { invoices, user } = useSelector((state: any) => (state.invoice));
@@ -13,7 +11,7 @@ const InvoiceSummary = () => {
   const invoiceList = invoices?.products ?? [];
 
   const handleDownloadPDF = () => {
-    dispatch<any>(createAndDownloadPDF(invoices, user.token, navigate ,user ));
+    dispatch<any>(createAndDownloadPDF(invoices, user.token ,user ));
   };
 
   return (
