@@ -1,6 +1,6 @@
 import express from 'express'
-const { createInvoice ,getInvoice } = require('../controllers/Invoice');
-const {auth} = require('../middlewares/auth');
+const { createInvoice  } = require('../controllers/Invoice');
+const auth = require('../middlewares/auth')
 
 const router = express.Router();
 
@@ -10,5 +10,5 @@ const router = express.Router();
 
 
 router.post('/addProduct' ,auth, createInvoice);
-// router.get('/getInvoice',auth,getInvoice);
+
 module.exports = router;
