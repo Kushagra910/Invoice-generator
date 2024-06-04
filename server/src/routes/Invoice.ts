@@ -1,6 +1,6 @@
 import express from 'express'
 const { createInvoice ,getInvoice } = require('../controllers/Invoice');
-const  {auth}  = require('../middlewares/auth');
+const {auth} = require('../middlewares/auth');
 
 const router = express.Router();
 

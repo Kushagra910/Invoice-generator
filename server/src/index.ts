@@ -6,7 +6,6 @@ import database from './configs/db';
 const authRoutes  = require('./routes/auth');
 const invoiceRoutes =  require("./routes/Invoice");
 const app = express();
-const auth = require('./middlewares/auth');
 
 dotenv.config();
 
