@@ -77,6 +77,9 @@ exports.createInvoice = async (req: CustomRequest, res: Response) => {
     console.log("Launching Puppeteer...");
     const chromiumExecutablePath = puppeteer.executablePath();
 
+    // Set the Puppeteer cache path
+    process.env.PUPPETEER_DOWNLOAD_PATH = '/server/cache'; // Set this to the correct cache path
+
     const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"],executablePath: chromiumExecutablePath });
     const page = await browser.newPage();
 
@@ -118,7 +121,6 @@ exports.createInvoice = async (req: CustomRequest, res: Response) => {
     return res.status(500).json({ success: false, message: 'Server error' });
   }
 };
-
 
 
 

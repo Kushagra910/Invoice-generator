@@ -72,6 +72,8 @@ exports.createInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
         // Launch Puppeteer
         console.log("Launching Puppeteer...");
         const chromiumExecutablePath = puppeteer.executablePath();
+        // Set the Puppeteer cache path
+        process.env.PUPPETEER_DOWNLOAD_PATH = '/server/cache'; // Set this to the correct cache path
         const browser = yield puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"], executablePath: chromiumExecutablePath });
         const page = yield browser.newPage();
         console.log("Setting page content...");
