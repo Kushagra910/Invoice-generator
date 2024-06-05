@@ -20,7 +20,7 @@ Invoice Generator is a web application that allows users to generate PDF invoice
 
 ## configure .env file before running the backend server
 - **PORT** =3000
-- **MONGO_URI** =mongodb://localhost:27017/invoice-generator
+- **DATABASE_URL** =mongodb://localhost:27017/invoice-generator
 - **JWT_SECRET** =your_jwt_secret
 
 ### Clone the Repository
